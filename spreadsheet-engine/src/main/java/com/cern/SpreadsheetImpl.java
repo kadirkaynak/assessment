@@ -1,6 +1,10 @@
 package com.cern;
 
+import com.cern.enums.ValueType;
+
 import java.util.Arrays;
+
+import static utils.Utilities.isInteger;
 
 public class SpreadsheetImpl implements Spreadsheet{
     private final int rows;
@@ -29,6 +33,19 @@ public class SpreadsheetImpl implements Spreadsheet{
     private void controlIndexValidation(int row, int col) {
         if (row < 0 || row >= rows || col < 0 || col >= columns) {
             throw new IndexOutOfBoundsException("Index of the Cell is out of bounds.");
+        }
+    }
+
+    public ValueType getValueType(int row, int col) {
+        controlIndexValidation(row, col);
+
+        String value = cells[row][col];
+        if (value.startsWith("=")) {
+            return ValueType.FORMULA;
+        } else if (isInteger(value.trim())) {
+            return ValueType.INTEGER;
+        } else {
+            return ValueType.STRING;
         }
     }
 }

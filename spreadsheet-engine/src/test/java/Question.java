@@ -1,5 +1,6 @@
 import com.cern.Office;
 import com.cern.SpreadsheetImpl;
+import com.cern.enums.ValueType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,5 +54,24 @@ public class Question {
     @Test(expected = IndexOutOfBoundsException.class)
     public void cantPutOutOfLimits() {
         sheet.put(3, 7, "foo");
+    }
+
+    @Test
+    public void basicValueTypesAreRecognized() {
+        sheet.put(2, 3, "foo");
+        Assert.assertEquals(ValueType.STRING, sheet.getValueType(2, 3));
+
+        sheet.put(0, 0, "foo56");
+        Assert.assertEquals(ValueType.STRING, sheet.getValueType(0, 0));
+
+        sheet.put(5, 2, "12");
+        Assert.assertEquals(ValueType.INTEGER, sheet.getValueType(5, 2));
+
+        // A value is a formula if and only if the first character is "="
+        sheet.put(1, 1, "= 4 + 8");
+        Assert.assertEquals(ValueType.FORMULA, sheet.getValueType(1, 1));
+
+        // Formulas are not computed. That means, no need to parse them
+        Assert.assertEquals("= 4 + 8", sheet.get(1, 1));
     }
 }
