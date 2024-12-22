@@ -17,10 +17,18 @@ public class SpreadsheetImpl implements Spreadsheet{
     }
 
     public String get(int row, int col) {
+        controlIndexValidation(row, col);
         return cells[row][col];
     }
 
     public void put(int row, int col, String value) {
+        controlIndexValidation(row, col);
         cells[row][col] = value;
+    }
+
+    private void controlIndexValidation(int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= columns) {
+            throw new IndexOutOfBoundsException("Index of the Cell is out of bounds.");
+        }
     }
 }

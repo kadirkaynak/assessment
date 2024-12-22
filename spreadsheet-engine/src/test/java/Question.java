@@ -44,4 +44,14 @@ public class Question {
         sheet.put(3, 3, "bar");
         Assert.assertEquals("bar", sheet.get(3, 3));
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void cantGetOutOfLimits() {
+        sheet.get(12, 3);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void cantPutOutOfLimits() {
+        sheet.put(3, 7, "foo");
+    }
 }
