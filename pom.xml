@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>duplicate-finder</module>
+        <module>dependency-resolver</module>
     </modules>
 
     <properties>
