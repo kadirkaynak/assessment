@@ -1,4 +1,4 @@
-package com.cern;
+package com.cern.contract;
 
 import com.cern.enums.ValueType;
 
