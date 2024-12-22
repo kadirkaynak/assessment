@@ -1,12 +1,13 @@
-package com.cern;
+package com.cern.impl;
 
+import com.cern.contract.Spreadsheet;
 import com.cern.enums.ValueType;
 
 import java.util.Arrays;
 
 import static utils.Utilities.isInteger;
 
-public class SpreadsheetImpl implements Spreadsheet{
+public class SpreadsheetImpl implements Spreadsheet {
     private final int rows;
     private final int columns;
     private final String[][] cells;
@@ -48,5 +49,18 @@ public class SpreadsheetImpl implements Spreadsheet{
         } else {
             return ValueType.STRING;
         }
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public boolean isEmpty(int row, int col) {
+        controlIndexValidation(row, col);
+        return cells[row][col].isEmpty();
     }
 }

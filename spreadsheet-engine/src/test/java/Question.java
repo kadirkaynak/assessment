@@ -1,5 +1,7 @@
 import com.cern.Office;
-import com.cern.SpreadsheetImpl;
+import com.cern.impl.DashSpreadsheetExporter;
+import com.cern.impl.StarSpreadsheetExporter;
+import com.cern.impl.SpreadsheetImpl;
 import com.cern.enums.ValueType;
 import org.junit.Assert;
 import org.junit.Before;
@@ -83,5 +85,44 @@ public class Question {
         // But string cells stay as they are
         sheet.put(2, 2, "     foo ");
         Assert.assertEquals("     foo ", sheet.get(2, 2));
+    }
+
+    /**
+     * In a more real example, the different representations could perhaps be JSON,
+     * XML, CSV and binary format. But we will use simple export options here.
+     */
+    @Test
+    public void differentExportOptionsAreProvided() {
+        sheet.put(0, 0, "a");
+        sheet.put(1, 1, "b");
+        sheet.put(2, 2, "c");
+        sheet.put(3, 3, "d");
+        sheet.put(3, 4, "e");
+
+        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
+                        + "a-----" // 0
+                        + "-b----" // 1
+                        + "--c---" // 2
+                        + "---d-e-" // 3
+                        + "-----" // 4
+                        + "-----" // 5
+                        + "-----" // 6
+                        + "-----" // 7
+                        + "-----" // 8
+                        + "-----" // 9
+                , new DashSpreadsheetExporter(sheet).export());
+
+        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
+                        + "a*****" // 0
+                        + "*b****" // 1
+                        + "**c***" // 2
+                        + "***d*e*" // 3
+                        + "*****" // 4
+                        + "*****" // 5
+                        + "*****" // 6
+                        + "*****" // 7
+                        + "*****" // 8
+                        + "*****" // 9
+                , new StarSpreadsheetExporter(sheet).export());
     }
 }
