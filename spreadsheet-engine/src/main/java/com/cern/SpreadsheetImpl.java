@@ -27,7 +27,8 @@ public class SpreadsheetImpl implements Spreadsheet{
 
     public void put(int row, int col, String value) {
         controlIndexValidation(row, col);
-        cells[row][col] = value;
+        if(isInteger(value.trim())) cells[row][col] = value.trim();
+        else cells[row][col] = value;
     }
 
     private void controlIndexValidation(int row, int col) {
