@@ -19,4 +19,8 @@ public class SpreadsheetImpl implements Spreadsheet{
     public String get(int row, int col) {
         return cells[row][col];
     }
+
+    public void put(int row, int col, String value) {
+        cells[row][col] = value;
+    }
 }
